@@ -9,23 +9,42 @@ var pileSnow = [];
 var bottom;
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(600, 400);
   gravity = createVector(0, 0.1);
   wind = createVector(0.1, 0);
   angle = PI;
   initPileSnow();
+  renderSnowPile();
 }
 
 function initPileSnow() {
-  bottom = 30;
   var h = 0;
-  for(var i = 1; i < width-1; i++) {
-    pileSnow[i] = map(sin(h), -1,1, 0, 10);
+  for(var i = 0; i < width; i++) {
+    pileSnow.push(map(sin(h), -1,1, 2, 10));
     h += 0.1;
   }
+}
 
-  pileSnow[0] = bottom;
-  pileSnow[width-1] = bottom;
+function addToSnowPile(x, y, size) {
+  var aux = 0;
+  var l = floor(x - floor(size/2));
+  var r = floor(x + floor(size/2));
+
+  for(var i = l; i <= r; i++) {
+    pileSnow[i] += map(sin(aux), -1,1, 0, size/2);
+    aux += PI/(r-l);
+  }
+}
+
+function renderSnowPile() {
+  fill(255);
+  beginShape();
+  vertex(0, height);
+  for(var i = 1; i < width-1; i++) {
+    vertex(i, height - pileSnow[i]);
+  }
+  vertex(width-1, height);
+  endShape(CLOSE);
 }
 
 function draw() {
@@ -48,14 +67,6 @@ function draw() {
     flake.render();
   }
 
-
-  // render pile of snow
-  fill(255);
-  translate(0, height - bottom);
-  beginShape();
-  for(var i = 0; i < width; i++) {
-    vertex(i, pileSnow[i]);
-  }
-  endShape();
+  renderSnowPile();
 
 }
