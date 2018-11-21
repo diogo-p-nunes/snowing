@@ -48,7 +48,7 @@ function renderSnowPile() {
 }
 
 function draw() {
-  background(50);
+  background(132, 168, 255);
 
   // create the flakes
   if(snowFlakes.length <= 200) {
