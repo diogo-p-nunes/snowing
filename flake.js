@@ -40,8 +40,8 @@ class Flake {
         this.pos.add(this.vel);
         
         if(this.outOfScreenBottom()) {
-            this.resetFlake();
             addToSnowPile(this.pos.x, this.pos.y, this.size);
+            this.resetFlake();
         }
 
         this.wrap();   
@@ -59,7 +59,7 @@ class Flake {
 
     outOfScreenBottom() {
         var x = floor(this.pos.x);
-        return this.pos.y > (height - pileSnow[x]);
+        return this.pos.y >= (height - snowPileSize);
         //return this.pos.y - this.size > height;
     }
 }
