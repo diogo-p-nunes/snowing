@@ -16,7 +16,9 @@ class Flake {
         force.mult(this.size*0.1);
 
         // v = v0 + force * t
-        this.vel.add(force);
+        if(this.vel.mag() < this.velLimit) {
+            this.vel.add(force);
+        }
     }
 
     render() {
@@ -31,6 +33,7 @@ class Flake {
         this.pos = createVector(x, y)
         this.size = this.semiRandom(2, 13);
         this.vel = createVector(0,0);
+        this.velLimit = 10;
     }
 
     update() {
